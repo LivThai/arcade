@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Arcade</title>
+<style>
+  body {
+    background: #10121c;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+  }
+  header {
+    background: #1d2030;
+    padding: 24px;
+    text-align: center;
+  }
+  h1 { color: #48d9ff; }
+  input {
+    padding: 13px;
+    border-radius: 8px;
+    border: none;
+    width: 75%;
+    max-width: 450px;
+  }
+  .games {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    padding: 30px;
+  }
+  .game {
+    background: #24283a;
+    padding: 30px;
+    border-radius: 14px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  .game:hover { background: #38415e; }
+  #playArea {
+    text-align: center;
+    padding: 20px;
+  }
+  iframe {
+    width: 95%;
+    height: 550px;
+    border: none;
+    background: white;
+  }
+  button {
+    padding: 12px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🎮 MY ARCADE</h1>
+  <p>Play free browser games!</p>
+  <input id="search" placeholder="Search games..." oninput="searchGames()">
+</header>
+
+<div class="games" id="games">
+  <div class="game" onclick="play('2048')">🔢 2048</div>
+  <div class="game" onclick="play('Hextris')">🧩 Hextris</div>
+  <div class="game" onclick="play('Clumsy Bird')">🐦 Clumsy Bird</div>
+</div>
+
+<div id="playArea"></div>
+
+<script>
+const games = {
+  "2048": "https://play2048.co/",
+  "Hextris": "https://hextris.io/",
+  "Clumsy Bird": "https://ellisonleao.github.io/clumsy-bird/"
+};
+
+function play(name) {
+  document.getElementById("playArea").innerHTML =
+    `<h2>${name}</h2>
+     <button onclick="closeGame()">Back to games</button>
+     <p>If the game does not load, open it directly.</p>
+     <a href="${games[name]}" target="_blank" rel="noopener noreferrer">Open game</a>
+     <iframe src="${games[name]}" title="${name}"></iframe>`;
+  document.getElementById("games").style.display = "none";
+}
+
+function closeGame() {
+  document.getElementById("playArea").innerHTML = "";
+  document.getElementById("games").style.display = "grid";
+}
+
+function searchGames() {
+  let search = document.getElementById("search").value.toLowerCase();
+  document.querySelectorAll(".game").forEach(game => {
+    game.style.display = game.textContent.toLowerCase().includes(search)
+      ? "block" : "none";
+  });
+}
+</script>
+
+</body>
+</html>
+  
